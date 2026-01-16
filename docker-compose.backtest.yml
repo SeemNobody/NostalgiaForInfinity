@@ -302,3 +302,102 @@ services:
       --export signals
       --export-filename backtest-eth-btc-futures-full.json
       --log-file user_data/logs/backtest-eth-btc-full.log
+
+  # ============================================
+  # Top 40 Pairs - 1 Year Backtest (2025-2026)
+  # ============================================
+  download-data-top40:
+    <<: *common-settings
+    container_name: nfi-download-top40-futures
+    command: >
+      download-data
+      --exchange binance
+      --trading-mode futures
+      --config configs/pairlist-backtest-top40-binance-futures-usdt.json
+      --timeframes 5m 15m 1h 4h 1d
+      --timerange 20250101-20260116
+      --data-format-ohlcv feather
+
+  backtest-top40:
+    <<: *common-settings
+    container_name: nfi-backtest-top40-futures
+    command: >
+      backtesting
+      --strategy NostalgiaForInfinityX7
+      --timerange 20250101-20260101
+      --config configs/backtest-top40-futures.json
+      --config configs/trading_mode-futures.json
+      --config configs/pairlist-backtest-top40-binance-futures-usdt.json
+      --config configs/blacklist-binance.json
+      --breakdown day
+      --export signals
+      --export-filename backtest-top40-futures-2025.json
+      --log-file user_data/logs/backtest-top40-futures-2025.log
+
+  # ============================================
+  # Top 10 Pairs - Simplified 1 Year Backtest (2025-2026)
+  # ============================================
+  backtest-top10:
+    <<: *common-settings
+    container_name: nfi-backtest-top10-futures
+    command: >
+      backtesting
+      --strategy NostalgiaForInfinityX7
+      --timerange 20250101-20260101
+      --config configs/backtest-top40-futures.json
+      --config configs/trading_mode-futures.json
+      --config configs/pairlist-backtest-top10-binance-futures-usdt.json
+      --config configs/blacklist-binance.json
+      --breakdown day
+      --export signals
+      --export-filename backtest-top10-futures-2025.json
+      --log-file user_data/logs/backtest-top10-futures-2025.log
+
+  # ============================================
+  # BTC-Only Futures Backtest Data Download
+  # ============================================
+  download-data-btc-only:
+    <<: *common-settings
+    container_name: nfi-download-btc-only-futures
+    command: >
+      download-data
+      --exchange binance
+      --trading-mode futures
+      --config configs/test-btc-only.json
+      --timeframes 5m 15m 1h 4h 1d
+      --timerange 20240101-20260116
+      --data-format-ohlcv feather
+
+  # ============================================
+  # BTC/USDT Futures 1-Year Backtest (2024-2025)
+  # ============================================
+  backtest-btc-only-2024:
+    <<: *common-settings
+    container_name: nfi-backtest-btc-only-2024
+    command: >
+      backtesting
+      --strategy NostalgiaForInfinityX7
+      --timerange 20240101-20250101
+      --config configs/backtest-btc-only-correct.json
+      --config configs/trading_mode-futures.json
+      --breakdown day
+      --export signals
+      --export-filename backtest-btc-only-2024.json
+      --log-file user_data/logs/backtest-btc-only-2024.log
+
+  # ============================================
+  # BTC/USDT Futures Latest Year (2025-01-16)
+  # ============================================
+  backtest-btc-only-latest:
+    <<: *common-settings
+    container_name: nfi-backtest-btc-only-latest
+    command: >
+      backtesting
+      --strategy NostalgiaForInfinityX7
+      --timerange 20250116-20260116
+      --config configs/backtest-btc-only-correct.json
+      --config configs/trading_mode-futures.json
+      --breakdown day
+      --export signals
+      --export-filename backtest-btc-only-latest-1y.json
+      --log-file user_data/logs/backtest-btc-only-latest-1y.log
