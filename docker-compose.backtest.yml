@@ -401,3 +401,33 @@ services:
       --export signals
       --export-filename backtest-btc-only-latest-1y.json
       --log-file user_data/logs/backtest-btc-only-latest-1y.log
+
+  # ============================================
+  # ETH/SOL/BTC Futures - 1 Year Backtest (2025-2026)
+  # ============================================
+  download-data-eth-sol-btc:
+    <<: *common-settings
+    container_name: nfi-download-eth-sol-btc-futures
+    command: >
+      download-data
+      --exchange binance
+      --trading-mode futures
+      --config configs/backtest-eth-sol-btc-futures.json
+      --timeframes 5m 15m 1h 4h 1d
+      --timerange 20250116-20260116
+      --data-format-ohlcv feather
+
+  backtest-eth-sol-btc-2025:
+    <<: *common-settings
+    container_name: nfi-backtest-eth-sol-btc-2025
+    command: >
+      backtesting
+      --strategy NostalgiaForInfinityX7
+      --timerange 20250116-20260116
+      --config configs/exampleconfig.json
+      --config configs/trading_mode-futures.json
+      --config configs/backtest-eth-sol-btc-futures.json
+      --breakdown day
+      --export signals
+      --export-filename backtest-eth-sol-btc-futures-2025-2026.json
+      --log-file user_data/logs/backtest-eth-sol-btc-2025-2026.log
