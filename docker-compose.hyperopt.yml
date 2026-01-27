@@ -1,0 +1,39 @@
+---
+# Docker Compose配置用于Hyperopt优化
+
+x-common-settings:
+  &common-settings
+  image: freqtradeorg/freqtrade:stable
+  build:
+    context: .
+    dockerfile: "./docker/Dockerfile.custom"
+  restart: "no"
+  volumes:
+    - "./user_data:/freqtrade/user_data"
+    - "./user_data/data:/freqtrade/user_data/data"
+    - "./configs:/freqtrade/configs"
+    - "./NostalgiaForInfinityX7.py:/freqtrade/NostalgiaForInfinityX7.py"
+    - "./NostalgiaForInfinityX7Hyperopt.py:/freqtrade/NostalgiaForInfinityX7Hyperopt.py"
+  env_file:
+    - path: .env
+      required: false
+
+services:
+  hyperopt-phase1:
+    <<: *common-settings
+    container_name: nfi_hyperopt_phase1
+    command: >
+      hyperopt
+      --strategy NostalgiaForInfinityX7Hyperopt
+      --config configs/hyperopt-x7.json
+      --config configs/pairlist-backtest-static-binance-spot-usdt.json
+      --hyperopt-loss SharpeHyperOptLossDaily
+      --spaces protection
+      --epochs 200
+      --timerange 20240101-20250101
+      --hyperopt-random-state 42
+      --min-trades 50
+      --jobs -1
+      --print-all
+    environment:
+      - FREQTRADE__STRATEGY=NostalgiaForInfinityX7Hyperopt

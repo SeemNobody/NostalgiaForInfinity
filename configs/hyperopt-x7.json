@@ -1,0 +1,83 @@
+{
+  "max_open_trades": 6,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "tradable_balance_ratio": 0.99,
+  "timeframe": "5m",
+  "dry_run": true,
+  "dry_run_wallet": 10000,
+  "exchange": {
+    "name": "binance",
+    "key": "",
+    "secret": "",
+    "pair_whitelist": [],
+    "pair_blacklist": [],
+    "ccxt_config": {
+      "enableRateLimit": true
+    },
+    "ccxt_async_config": {
+      "enableRateLimit": true
+    }
+  },
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ],
+  "edge": {
+    "enabled": false
+  },
+  "telegram": {
+    "enabled": false
+  },
+  "api_server": {
+    "enabled": false,
+    "listen_ip_address": "127.0.0.1",
+    "listen_port": 8080,
+    "username": "freqtrader",
+    "password": "freqtrader"
+  },
+  "db_url": "sqlite:///tradesv3.dryrun.db",
+  "user_data_dir": "user_data",
+  "datadir": "user_data/data",
+  "initial_state": "running",
+  "fee_open_cost_method": "safeguard",
+  "fee_close_cost_method": "safeguard",
+  "fee_sample_right": false,
+  "use_exit_signal": true,
+  "exit_profit_only": false,
+  "exit_profit_offset": 0.0,
+  "ignore_roi_if_entry_signal": true,
+  "backtest": {
+    "timerange": "20240101-20250101",
+    "max_open_trades": 6,
+    "stake_amount": "unlimited",
+    "dry_run_wallet": 10000,
+    "enable_protections": false
+  },
+  "hyperopt": {
+    "enabled": true,
+    "hyperopt_random_state": 42,
+    "hyperopt_min_trades": 50,
+    "hyperopt_loss": "SharpeHyperOptLossDaily",
+    "hyperopt_jobs": -1,
+    "hyperopt_epochs": 200,
+    "hyperopt_show_index": false,
+    "hyperopt_show_progressive": false,
+    "hyperopt_random_state": 42,
+    "hyperopt_space": "all",
+    "hyperopt_spaces": ["protection", "grinding", "buy", "sell", "roi"],
+    "hyperopt_list": false,
+    "hyperopt_list_best": 10,
+    "hyperopt_list_trials": false,
+    "hyperopt_save_epochs": false,
+    "hyperopt_save_results": true,
+    "hyperopt_show_results": true
+  },
+  "nfi_parameters": {
+    "grinding_enable": true,
+    "derisk_enable": true,
+    "stops_enable": true,
+    "doom_stops_enable": true
+  }
+}
