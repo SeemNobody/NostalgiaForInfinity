@@ -1,0 +1,25 @@
+{
+  "stake_currency": "USDT",
+  "exchange": {
+    "name": "binance",
+    "pair_whitelist": [
+      "BTC/USDT:USDT",
+      "ETH/USDT:USDT",
+      "BNB/USDT:USDT",
+      "SOL/USDT:USDT",
+      "XRP/USDT:USDT",
+      "DOGE/USDT:USDT",
+      "ADA/USDT:USDT",
+      "AVAX/USDT:USDT",
+      "LINK/USDT:USDT",
+      "DOT/USDT:USDT"
+    ]
+  },
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ],
+  "trading_mode": "futures",
+  "margin_mode": "isolated"
+}

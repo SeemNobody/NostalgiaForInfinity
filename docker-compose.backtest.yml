@@ -14,7 +14,9 @@ x-common-settings: &common-settings
 
 services:
   # ============================================
-  # Data Download Service - Download 5 years of data
+  # Data Download Service - Download 5 years of data (FULL - 1000+ pairs)
+  # WARNING: 使用全部币对下载，需要 100GB+ 存储空间和 1-2 小时下载时间
+  # 推荐：使用 download-data-core 或 download-data-extended 替代
   # ============================================
   download-data:
     <<: *common-settings
@@ -24,6 +26,40 @@ services:
       --exchange binance
       --trading-mode futures
       --config configs/pairlist-backtest-static-binance-futures-usdt.json
+      --timeframes 5m 15m 1h 4h 1d
+      --timerange 20210101-20260115
+      --data-format-ohlcv feather
+
+  # ============================================
+  # Data Download Service - Core Pairs Only (10 pairs)
+  # 推荐用于快速测试和开发
+  # 存储需求：~5GB | 下载时间：~10-15 分钟
+  # ============================================
+  download-data-core:
+    <<: *common-settings
+    container_name: nfi-download-binance-futures-core
+    command: >
+      download-data
+      --exchange binance
+      --trading-mode futures
+      --config configs/pairlist-backtest-core-binance-futures-usdt.json
+      --timeframes 5m 15m 1h 4h 1d
+      --timerange 20210101-20260115
+      --data-format-ohlcv feather
+
+  # ============================================
+  # Data Download Service - Extended Pairs (30 pairs)
+  # 推荐用于标准回测和优化
+  # 存储需求：~15GB | 下载时间：~30-45 分钟
+  # ============================================
+  download-data-extended:
+    <<: *common-settings
+    container_name: nfi-download-binance-futures-extended
+    command: >
+      download-data
+      --exchange binance
+      --trading-mode futures
+      --config configs/pairlist-backtest-extended-binance-futures-usdt.json
       --timeframes 5m 15m 1h 4h 1d
       --timerange 20210101-20260115
       --data-format-ohlcv feather

@@ -15,6 +15,7 @@
 
 | 序号 | 文件名 | 大小 | 用途 |
 |------|--------|------|------|
+| 00 | [../data-download-best-practices.md](../data-download-best-practices.md) | 12KB | **数据下载最佳实践** ⭐ 新增 |
 | 01 | [01-backtesting-framework-overview.md](01-backtesting-framework-overview.md) | 13KB | 回测框架完整总结 |
 | 02 | [02-docker-hyperopt-quick-start.md](02-docker-hyperopt-quick-start.md) | 8KB | Docker Hyperopt 快速开始 |
 | 03 | [03-docker-hyperopt-detailed-guide.md](03-docker-hyperopt-detailed-guide.md) | 16KB | Docker Hyperopt 详细指南 |
@@ -28,9 +29,10 @@
 
 ### 初学者路径
 
-1. **了解基础** → [01-backtesting-framework-overview.md](01-backtesting-framework-overview.md)
-2. **快速开始** → [02-docker-hyperopt-quick-start.md](02-docker-hyperopt-quick-start.md)
-3. **运行优化** → [03-docker-hyperopt-detailed-guide.md](03-docker-hyperopt-detailed-guide.md)
+1. **了解数据下载** → [../data-download-best-practices.md](../data-download-best-practices.md) ⭐ 新增
+2. **了解基础** → [01-backtesting-framework-overview.md](01-backtesting-framework-overview.md)
+3. **快速开始** → [02-docker-hyperopt-quick-start.md](02-docker-hyperopt-quick-start.md)
+4. **运行优化** → [03-docker-hyperopt-detailed-guide.md](03-docker-hyperopt-detailed-guide.md)
 
 ### 优化者路径
 
@@ -47,8 +49,11 @@
 ## 🚀 30秒快速开始
 
 ```bash
-# 1. 准备数据
-docker compose -f docker-compose.backtest.yml run --rm download-data
+# 1. 准备数据 - 使用智能下载脚本（推荐）
+bash scripts/download-data-smart.sh extended
+
+# 或使用 Docker Compose 直接下载
+docker compose -f docker-compose.backtest.yml run --rm download-data-extended
 
 # 2. 运行阶段1优化
 bash scripts/docker_hyperopt.sh 1 200
@@ -56,6 +61,13 @@ bash scripts/docker_hyperopt.sh 1 200
 # 3. 查看结果
 docker compose -f docker-compose.hyperopt.yml run --rm freqtrade hyperopt-show --best -n 10
 ```
+
+**💡 提示**:
+- 使用 `download-data-extended` 下载 30 个币对 (~15GB, 30-45分钟) - 推荐
+- 使用 `download-data-core` 下载 10 个币对 (~5GB, 10-15分钟) - 快速测试
+- 使用 `download-data` 下载全部币对 (~100GB, 1-2小时) - 完整分析
+
+详见: [数据下载最佳实践](../data-download-best-practices.md)
 
 ---
 
